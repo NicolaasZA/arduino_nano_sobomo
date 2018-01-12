@@ -1,6 +1,8 @@
 // This sketch looks for 1-wire devices and prints their addresses (serial number)
 // to the UART, in a format that is useful in Arduino sketches.
 
+// This code is by Shalvan from Hacktronics. See https://www.hacktronics.com/Tutorials/arduino-1-wire-address-finder.html
+
 // --- Include Libraries
 // OneWire, found at http://www.pjrc.com/teensy/td_libs_OneWire.html
 #include <OneWire.h>
