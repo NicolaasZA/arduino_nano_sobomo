@@ -129,11 +129,6 @@ void doWarningCheck(float tankTemp, float pipeTemp)
     {
       toggleWarningStatus();
     }
-    // and stop the pump
-    if (currentPumpStatus == STATUS_ON)
-    {
-      togglePumpStatus();
-    }
   }
   else if (tankTemp > FREEZE_UPPER_TEMP)
   {
@@ -142,7 +137,6 @@ void doWarningCheck(float tankTemp, float pipeTemp)
     {
       toggleWarningStatus();
     }
-    // No need to worry about pump since it gets checked after warning check in the loop function
   }
 }
 
@@ -211,11 +205,8 @@ void loop()
   // Do warning check
   doWarningCheck(tankTemperature, pipeTemperature);
 
-  // Do pump check, if warning light is off
-  if (currentWarningStatus == STATUS_OFF)
-  {
-    doPumpControlCheck(tankTemperature, pipeTemperature);
-  }
+  // Do pump check
+  doPumpControlCheck(tankTemperature, pipeTemperature);
 
   // Print latest reading
   Serial.print(readingCounter); // Reading count
