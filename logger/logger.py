@@ -10,13 +10,13 @@ import datetime
 import log_settings as settings
 
 
-class EOL:
-    DATA = '$'
-    DEVICE = '&'
+class BOL:
+    EVENT = '@'
+    INFORMATION = '#'
 
 
 def makeFile():
-    filename = settings.OUT_FILENAME_FORMAT.format(datetime.datetime.now())
+    filename = 'temp_{:%Y%m%d_%H%M%S}'.format(datetime.datetime.now())
     mfile = open('readings//{}.csv'.format(filename), 'w')
     return mfile
 
@@ -51,48 +51,31 @@ if __name__ == "__main__":
             if len(text) <= 0:
                 continue
             
-            # Device reading
-            if text[0] == EOL.DEVICE:
-                # further cleaning
-                text = text.replace(EOL.DEVICE, '')
-
-                # print it
-                print('DEVICE {} at {}'.format(deviceIndex, text))
-
-                # write it
-                datafile.write('DEVICE {} at {}\n'.format(deviceIndex, text))
-                datafile.flush()
-
-                # count it
-                deviceIndex += 1
-
-                # next it
+            # EVENT LINE
+            if text[0] == BOL.EVENT:
+                # Print
+                print(text.replace(BOL.EVENT,'[EVENT]'))
                 continue
 
-            # data reading
-            if text[0] == EOL.DATA:
-                # further cleaning
-                text = text.replace(EOL.DATA, '')
-
-                # insert date and time
-                text = text.replace('@', '{:%Y-%m-%d,%H:%M:%S}'.format(datetime.datetime.now()))
-
-                # header it
-                if counter == 0:
-                    print('\nID\tDATE\t\tTIME\t\tREADINGS')
-
-                # print it
-                print(text.replace(',','\t'))
-
-                # write it
-                datafile.write('{}\n'.format(text))
-                datafile.flush()
-
-                # count it
-                counter += 1
-
-                # next it
+            # EVENT LINE
+            if text[0] == BOL.INFORMATION:
+                # Print
+                print(text.replace(BOL.INFORMATION,'[INFO]'))
                 continue
+
+            # DATA LINE
+            # insert date and time
+            text = '{:%Y-%m-%d,%H:%M:%S},'.format(datetime.datetime.now()) + text
+
+            # print it
+            print(text.replace(',','\t'))
+
+            # write it
+            datafile.write('{}\n'.format(text))
+            datafile.flush()
+
+            # count it
+            counter += 1
 
     except KeyboardInterrupt:
         print("\nProgram was interrupted by user...")

@@ -148,14 +148,14 @@ void toggleWarningStatus()
   if (currentWarningStatus == STATUS_ON)
   {
     // Warning light is on, turn off
-    Serial.println("event: warning off");
+    Serial.println("@ event: warning off");
     digitalWrite(WARNING_OUTPUT_PIN, LOW);
     currentWarningStatus = STATUS_OFF;
   }
   else
   {
     // Warning light is off, turn on
-    Serial.println("event: warning on");
+    Serial.println("@ event: warning on");
     digitalWrite(WARNING_OUTPUT_PIN, HIGH);
     currentWarningStatus = STATUS_ON;
   }
