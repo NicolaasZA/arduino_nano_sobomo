@@ -18,13 +18,13 @@ You will **need** the following **software**:
 # The SERIAL syntax
 A typical line communicated over the serial port is set to look as follows:
 ```C++
-'#'                 // just a character showing start of a data line.
 int readCount,      // reading count
 float tankTemp,     // Tank temperature in Celcius
 float pipeTemp,     // Pipe heater temperature in Celcius
 int pumpState,      // Pump status - 1 for on, 0 for off
 int warningState    // Freeze warning - 1 for on, 0 for off
 ```
+NOTE: Non-data or comment lines start with a '#'
 
 # Acknowledgements
 The address_finder_i2c.ino script was written by Shalvan from [Hacktronics](https://www.hacktronics.com/Tutorials/arduino-1-wire-address-finder.html).

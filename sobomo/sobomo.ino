@@ -114,6 +114,11 @@ void togglePumpStatus()
   }
 }
 
+/**
+ * Do a check on the tank's temperature to see if there is a danger of freezing.
+ * If so, the pump needs to stop.
+ * See the STATUS constants.
+*/
 void doWarningCheck(float tankTemp, float pipeTemp)
 {
   // Check tank temperature
@@ -141,6 +146,9 @@ void doWarningCheck(float tankTemp, float pipeTemp)
   }
 }
 
+/**
+ * Toggle the warning light's current state
+ */
 void toggleWarningStatus()
 {
   if (currentWarningStatus == STATUS_ON)
@@ -172,7 +180,7 @@ void setup()
 
   // Start serial port
   Serial.begin(SERIAL_BAUDRATE);
-  Serial.print("Temperature Control Library Version ");
+  Serial.print("# Temperature Control Library Version ");
   Serial.println(DALLASTEMPLIBVERSION);
 
   // Initialize the Temperature measurement library
@@ -183,7 +191,7 @@ void setup()
   sensors.setResolution(pipe_sensor, SENSOR_RESOLUTION);
 
   // Open serial port
-  Serial.print("Reading intervals set to ");
+  Serial.print("# Reading intervals set to ");
   Serial.print((SENSOR_READ_INTERVAL / 1000));
   Serial.println(" seconds.");
 }
@@ -210,7 +218,6 @@ void loop()
   }
 
   // Print latest reading
-  Serial.print("#");            // Start of line
   Serial.print(readingCounter); // Reading count
   Serial.print(",");
   Serial.print(tankTemperature); // Tank sensor
@@ -219,11 +226,11 @@ void loop()
   Serial.print(",");
   Serial.print(currentPumpStatus); // Pump state
   Serial.print(",");
-  Serial.print(currentWarningStatus); // Freeze state
-  Serial.println("");          // End-of-line
+  Serial.println(currentWarningStatus); // Freeze state
 
-  // Read every ten seconds (1 from blink + 9 from this)
+  // Delay
   delay(SENSOR_READ_INTERVAL - LED_BLINK_DURATION);
 
+  // Increase reading counter
   readingCounter = readingCounter + 1;
 }
