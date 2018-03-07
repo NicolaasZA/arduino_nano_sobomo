@@ -13,7 +13,14 @@ You will **need** the following **software**:
 * Upload the *sobomo.ino* script to the nano
 
 ## The Logger
-**Currently broken!** Do not use unless you can fix.
+* Edit log_settings.py. Change the COM port number to the one you are connected to the Nano with.
+  * You can try to find the port via Device Manager -> Ports (COM & LPT)
+* Make sure there's a folder called 'readings' in the same directory you are running the logger script in. 
+  * If it's not there, create it.
+  * The script needs to be able to write files inside it.
+* Run the logger.py script from command prompt, or create a batch file.
+
+The readings will be logged in csv files in the previously mentioned 'readings' folder, stamped according to your system's date.
 
 # The SERIAL syntax
 A typical line communicated over the serial port is set to look as follows:
